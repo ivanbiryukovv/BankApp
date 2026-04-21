@@ -1,0 +1,86 @@
+﻿<Page x:Class="Kurs_Bank.Views.Pages.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="{StaticResource DarkBgBrush}">
+
+    <ScrollViewer Padding="30">
+        <StackPanel>
+            
+
+            <TextBlock x:Name="GreetingText"
+                       Foreground="{StaticResource TextLightBrush}"
+                       FontSize="22" FontWeight="Bold" Margin="0,0,0,6"/>
+
+            <Grid Margin="0,0,0,16">
+                <TextBlock Text="Ваши счета"
+               Foreground="{StaticResource AccentBrush}"
+               FontSize="14" VerticalAlignment="Center"/>
+                <Button Content="📥  Экспорт в Excel"
+            HorizontalAlignment="Right"
+            Click="ExportAccounts_Click"
+            Padding="12,6"
+            Background="#1F6B3A" Foreground="White"
+            BorderThickness="0" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}"
+                        CornerRadius="6" Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#2D9E57"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+
+            <ItemsControl x:Name="AccountsList">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="{StaticResource CardBgBrush}"
+            CornerRadius="12" Padding="20" Margin="0,0,16,16"
+            Width="220">
+                            <StackPanel>
+                                <TextBlock Text="{Binding AccountType}"
+                       Foreground="{StaticResource AccentBrush}"
+                       FontSize="12"/>
+                                <TextBlock Foreground="{StaticResource TextLightBrush}"
+                       FontSize="22" FontWeight="Bold" Margin="0,8,0,4">
+                <Run Text="{Binding Balance, StringFormat={}{0:N2}}"/>
+                <Run Text=" ₽"/>
+                                </TextBlock>
+                                <TextBlock Text="{Binding Status}"
+                       Foreground="#A78BFA" FontSize="11" Margin="0,0,0,12"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Закрыть счёт"
+                        Tag="{Binding AccountID}"
+                        Click="CloseAccount_Click"
+                        Padding="8,5" Margin="0,0,6,0"
+                        Background="#FF6B6B" Foreground="White"
+                        BorderThickness="0" Cursor="Hand" FontSize="11"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                    
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button Content="+ Открыть новый счёт"
+                    Style="{StaticResource PrimaryButton}"
+                    Width="220" HorizontalAlignment="Left"
+                    Click="OpenAccount_Click" Margin="0,8,0,0"/>
+            
+
+        </StackPanel>
+    </ScrollViewer>
+</Page>
